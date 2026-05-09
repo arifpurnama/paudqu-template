@@ -98,8 +98,9 @@
                     <a href="#tentang" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Tentang Kami</a>
                     <a href="#program" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Program</a>
                     <a href="#galeri" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Galeri</a>
-                    <!-- Menu Baru: Brosur -->
+                    <!-- Menu Baru: Brosur & Lokasi -->
                     <a href="#brosur" class="text-gray-700 hover:text-paud-primary font-bold transition-colors"><i class="fas fa-file-pdf text-red-500 mr-1"></i>Brosur</a>
+                    <a href="#lokasi" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Lokasi</a>
                     <a href="#pendaftaran" class="bg-paud-secondary text-white hover:bg-yellow-500 px-6 py-2 rounded-full font-heading text-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105">Daftar Sekarang</a>
                 </nav>
 
@@ -120,6 +121,7 @@
                 <a href="#program" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Program</a>
                 <a href="#galeri" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Galeri</a>
                 <a href="#brosur" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50"><i class="fas fa-file-pdf text-red-500 mr-2"></i>Download Brosur</a>
+                <a href="#lokasi" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Lokasi Kami</a>
                 <a href="#pendaftaran" class="block px-3 py-3 mt-4 text-center rounded-full font-heading bg-paud-secondary text-white hover:bg-yellow-500 shadow-md">Daftar Sekarang</a>
             </div>
         </div>
@@ -419,6 +421,58 @@
                     <div class="flex flex-col sm:flex-row gap-6 justify-center">
                         <a href="https://wa.me/6281234567890" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold text-xl px-8 py-4 rounded-full shadow-lg transition-colors flex items-center justify-center gap-3">
                             <i class="fab fa-whatsapp text-2xl"></i> Chat WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOKASI KAMI -->
+        <section id="lokasi" class="py-20 bg-white relative overflow-hidden border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-paud-secondary font-bold tracking-wider uppercase text-sm mb-2">Kunjungi Kami</h2>
+                    <h3 class="text-4xl md:text-5xl text-paud-text mb-4">Lokasi <span class="text-paud-primary">Sekolah</span></h3>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Silakan datang langsung ke sekolah kami untuk melihat fasilitas dan lingkungan belajar di PAUDQU Bintang Ceria.</p>
+                </div>
+
+                <div class="bg-green-50 rounded-[2rem] p-4 md:p-8 shadow-xl border-4 border-green-100 flex flex-col lg:flex-row gap-8 items-center">
+                    <!-- Map Iframe -->
+                    <div class="w-full lg:w-2/3 h-[400px] rounded-3xl overflow-hidden shadow-md border-4 border-white relative group">
+                        <!-- Menggunakan koordinat area Cilacap sebagai contoh, Anda bisa mengganti URL src ini dengan lokasi persis di Google Maps (Bagikan -> Sematkan Peta) -->
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126588.67383670679!2d108.93480749871842!3d-7.720762140417721!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e650c8bc034d673%3A0x3027a76e352b210!2sCilacap%2C%20Cilacap%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1715000000000!5m2!1sen!2sid" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            class="grayscale-[30%] group-hover:grayscale-0 transition-all duration-500">
+                        </iframe>
+                        <!-- Label "Buka Peta" overlay saat di-hover -->
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <span class="bg-white text-paud-text font-bold px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
+                                <i class="fas fa-search-location text-paud-primary text-xl"></i> Jelajahi Peta
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Info Alamat & Tombol Arah -->
+                    <div class="w-full lg:w-1/3 flex flex-col justify-center space-y-6 px-4">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                            <!-- Dekorasi kotak alamat -->
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-green-100 rounded-full mix-blend-multiply opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
+                            
+                            <div class="w-12 h-12 bg-paud-primary rounded-full flex items-center justify-center text-white text-xl mb-4 shadow-md relative z-10">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                            <h4 class="font-heading text-xl text-paud-text mb-2 relative z-10">Alamat Lengkap</h4>
+                            <p class="text-gray-600 font-semibold text-sm leading-relaxed relative z-10">Jl. Pendidikan Islami No. 123, Komplek Masjid An-Nur, Kota Berkah, Kabupaten Cilacap 53211</p>
+                        </div>
+                        
+                        <a href="https://maps.google.com/?q=Cilacap" target="_blank" class="bg-paud-accent hover:bg-blue-500 text-white font-bold py-4 px-6 rounded-full shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 group">
+                            <i class="fas fa-location-arrow transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i> Buka di Google Maps
                         </a>
                     </div>
                 </div>
