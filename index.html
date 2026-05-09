@@ -29,25 +29,25 @@
         }
     </script>
 
-    <!-- Google Fonts: Nunito (teks biasa) & Fredoka One (judul yang bulat & ramah) -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     
     <!-- FontAwesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS tambahan untuk animasi dan penyesuaian khusus -->
+    <!-- CSS tambahan -->
     <style>
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #F0FDF4;
             color: #0F172A;
+            overflow-x: hidden;
         }
         h1, h2, h3, h4, h5, h6, .font-heading {
             font-family: 'Fredoka One', cursive;
             font-weight: normal;
         }
         
-        /* Efek hover untuk kartu (bouncing halus) */
         .hover-bounce {
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -55,27 +55,34 @@
             transform: translateY(-10px);
         }
 
-        /* Pola latar belakang (dots) */
         .bg-pattern {
-            background-image: radial-gradient(#4ECDC4 2px, transparent 2px);
+            background-image: radial-gradient(#10B981 2px, transparent 2px);
             background-size: 30px 30px;
             background-position: 0 0, 15px 15px;
-            opacity: 0.1;
+            opacity: 0.05;
             position: absolute;
             inset: 0;
             z-index: -1;
         }
+
+        /* Styling untuk Modal Album Galeri */
+        #album-modal {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .no-scroll {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="relative min-h-screen flex flex-col antialiased">
-    <!-- Latar belakang pola -->
     <div class="bg-pattern"></div>
 
+    <!-- HEADER & NAVIGASI -->
     <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
                     <div class="w-12 h-12 bg-paud-primary rounded-full flex items-center justify-center text-white text-2xl shadow-lg transform rotate-[-10deg]">
                         <i class="fas fa-book-quran"></i>
                     </div>
@@ -91,7 +98,9 @@
                     <a href="#tentang" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Tentang Kami</a>
                     <a href="#program" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Program</a>
                     <a href="#galeri" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Galeri</a>
-                    <a href="#pendaftaran" class="bg-paud-accent text-paud-text hover:bg-yellow-400 px-6 py-2 rounded-full font-heading text-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105">Daftar Sekarang</a>
+                    <!-- Menu Baru: Brosur -->
+                    <a href="#brosur" class="text-gray-700 hover:text-paud-primary font-bold transition-colors"><i class="fas fa-file-pdf text-red-500 mr-1"></i>Brosur</a>
+                    <a href="#pendaftaran" class="bg-paud-secondary text-white hover:bg-yellow-500 px-6 py-2 rounded-full font-heading text-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105">Daftar Sekarang</a>
                 </nav>
 
                 <!-- Tombol Menu Mobile -->
@@ -103,25 +112,24 @@
             </div>
         </div>
 
-        <!-- Menu Mobile (Tersembunyi secara default) -->
+        <!-- Menu Mobile -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
             <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
-                <a href="#beranda" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Beranda</a>
-                <a href="#tentang" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Tentang Kami</a>
-                <a href="#program" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Program</a>
-                <a href="#galeri" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Galeri</a>
-                <a href="#pendaftaran" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-heading bg-paud-accent text-paud-text hover:bg-yellow-400 shadow-md">Daftar Sekarang</a>
+                <a href="#beranda" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Beranda</a>
+                <a href="#tentang" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Tentang Kami</a>
+                <a href="#program" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Program</a>
+                <a href="#galeri" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Galeri</a>
+                <a href="#brosur" class="block px-3 py-3 rounded-md font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50"><i class="fas fa-file-pdf text-red-500 mr-2"></i>Download Brosur</a>
+                <a href="#pendaftaran" class="block px-3 py-3 mt-4 text-center rounded-full font-heading bg-paud-secondary text-white hover:bg-yellow-500 shadow-md">Daftar Sekarang</a>
             </div>
         </div>
     </header>
 
     <main class="flex-grow">
-        <!-- Hero Section -->
+        <!-- HERO SECTION -->
         <section id="beranda" class="relative pt-20 pb-32 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
-                    
-                    <!-- Teks Hero -->
                     <div class="w-full lg:w-1/2 text-center lg:text-left">
                         <div class="inline-block px-4 py-1.5 bg-green-100 text-green-800 rounded-full font-bold text-sm mb-6 border border-green-200">
                             Assalamu'alaikum Ayah & Bunda! 🌟 PSB 2026/2027 Dibuka
@@ -133,26 +141,21 @@
                             Mari bergabung bersama kami membentuk karakter anak sholeh dan sholehah sejak dini melalui bermain dan cinta Al-Qur'an.
                         </p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a href="#pendaftaran" class="bg-paud-primary hover:bg-green-600 text-white font-heading text-xl px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                            <a href="#pendaftaran" class="bg-paud-primary hover:bg-green-600 text-white font-heading text-xl px-8 py-4 rounded-full shadow-lg transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
                                 <i class="fab fa-whatsapp"></i> Hubungi Kami
                             </a>
-                            <a href="#tentang" class="bg-white hover:bg-gray-50 text-paud-text border-2 border-gray-200 font-bold text-xl px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
-                                <i class="fas fa-play-circle text-paud-secondary"></i> Video Profil
+                            <a href="#brosur" class="bg-white hover:bg-gray-50 text-paud-text border-2 border-gray-200 font-bold text-xl px-8 py-4 rounded-full shadow-sm transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-file-download text-paud-secondary"></i> Unduh Brosur
                             </a>
                         </div>
                     </div>
 
-                    <!-- Gambar/Ilustrasi Hero -->
                     <div class="w-full lg:w-1/2 relative">
-                        <!-- Ornamen Latar Belakang Gambar -->
                         <div class="absolute inset-0 bg-paud-secondary rounded-full opacity-20 filter blur-3xl transform scale-110"></div>
-                        
-                        <!-- Gambar placeholder menggunakan placehold.co dengan warna ceria -->
                         <div class="relative z-10 w-full max-w-lg mx-auto">
-                            <!-- Menggunakan gambar placeholder yang merepresentasikan anak-anak/sekolah -->
-                            <img src="https://placehold.co/600x500/10B981/ffffff?text=Ilustrasi+Anak+Sholeh+Belajar" alt="Anak-anak mengaji di PAUDQU" class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500 w-full object-cover h-[400px] lg:h-[500px]">
+                            <!-- Menggunakan ilustrasi foto nyata anak muslim -->
+                            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80" alt="Anak belajar" class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500 w-full object-cover h-[400px] lg:h-[500px]">
                             
-                            <!-- Floating badges untuk kesan lucu -->
                             <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border-2 border-paud-primary bounce-animation" style="animation: bounce 3s infinite;">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl">
@@ -169,7 +172,7 @@
                 </div>
             </div>
             
-            <!-- Gelombang Pemisah di Bawah Hero -->
+            <!-- Gelombang -->
             <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
                 <svg class="relative block w-full h-16 md:h-24 lg:h-32" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.9,122.84,200.7,114A575.46,575.46,0,0,0,321.39,56.44Z" class="fill-white"></path>
@@ -177,147 +180,138 @@
             </div>
         </section>
 
+        <!-- TENTANG KAMI -->
         <section id="tentang" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <h2 class="text-paud-secondary font-bold tracking-wider uppercase text-sm mb-2">Mengapa Kami?</h2>
                     <h3 class="text-4xl md:text-5xl text-paud-text mb-6">Membangun Generasi <span class="text-paud-primary relative">Qur'ani<svg class="absolute w-full h-3 -bottom-1 left-0 text-paud-accent z-[-1]" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q50,20 100,10" stroke="currentColor" stroke-width="8" fill="none"/></svg></span> Sejak Dini</h3>
-                    <p class="text-lg text-gray-600">Kami percaya bahwa pendidikan usia dini adalah fondasi penting. Di PAUDQU Bintang Ceria, kami memadukan kurikulum modern dengan nilai-nilai agama Islam.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Kartu Fitur 1 -->
                     <div class="bg-green-50 rounded-3xl p-8 hover-bounce border-2 border-green-100">
-                        <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform rotate-3">
-                            <i class="fas fa-book-quran"></i>
-                        </div>
+                        <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform rotate-3"><i class="fas fa-book-quran"></i></div>
                         <h4 class="text-2xl font-heading text-paud-text mb-4">Metode Ummi</h4>
-                        <p class="text-gray-600 font-semibold">Belajar membaca Al-Qur'an menggunakan metode Ummi yang menyenangkan, mudah, dan terstruktur khusus untuk anak usia dini.</p>
+                        <p class="text-gray-600 font-semibold">Belajar membaca Al-Qur'an menggunakan metode Ummi yang menyenangkan, mudah, dan terstruktur.</p>
                     </div>
-
-                    <!-- Kartu Fitur 2 -->
                     <div class="bg-yellow-50 rounded-3xl p-8 hover-bounce border-2 border-yellow-100">
-                        <div class="w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform -rotate-3">
-                            <i class="fas fa-mosque"></i>
-                        </div>
+                        <div class="w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform -rotate-3"><i class="fas fa-mosque"></i></div>
                         <h4 class="text-2xl font-heading text-paud-text mb-4">Pembiasaan Ibadah</h4>
-                        <p class="text-gray-600 font-semibold">Menanamkan kecintaan beribadah sejak dini melalui praktek wudhu, shalat dhuha berjamaah, dan hafalan doa harian.</p>
+                        <p class="text-gray-600 font-semibold">Menanamkan kecintaan beribadah sejak dini melalui praktek wudhu dan shalat dhuha berjamaah.</p>
                     </div>
-
-                    <!-- Kartu Fitur 3 -->
                     <div class="bg-blue-50 rounded-3xl p-8 hover-bounce border-2 border-blue-100">
-                        <div class="w-16 h-16 bg-paud-accent rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform rotate-3">
-                            <i class="fas fa-users"></i>
-                        </div>
+                        <div class="w-16 h-16 bg-paud-accent rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform rotate-3"><i class="fas fa-users"></i></div>
                         <h4 class="text-2xl font-heading text-paud-text mb-4">Pendidik Berdedikasi</h4>
-                        <p class="text-gray-600 font-semibold">Asatidzah (guru-guru) yang sabar, penyayang, tersertifikasi, dan menjadi teladan akhlak mulia bagi ananda tercinta.</p>
+                        <p class="text-gray-600 font-semibold">Asatidzah yang sabar, penyayang, tersertifikasi, dan menjadi teladan akhlak mulia.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="program" class="py-20 bg-gray-50 relative">
+        <!-- BROSUR SECTION (BARU) -->
+        <section id="brosur" class="py-20 bg-green-50 relative overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl text-paud-text mb-4">Program <span class="text-paud-secondary">Kelas</span> Kami</h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Pilih kelompok usia yang sesuai dengan tahapan perkembangan ananda tercinta.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-                    <!-- Kelas Kelompok A -->
-                    <div class="bg-white rounded-[40px] overflow-hidden shadow-xl border-4 border-paud-secondary hover-bounce relative">
-                        <!-- Pita/Badge -->
-                        <div class="absolute top-6 right-0 bg-paud-secondary text-white font-bold py-2 px-6 rounded-l-full shadow-md z-10">
-                            Usia 4-5 Tahun
-                        </div>
-                        <img src="https://placehold.co/600x300/F59E0B/ffffff?text=Kelas+Taman+Syurga" alt="Kelompok A" class="w-full h-48 object-cover">
-                        <div class="p-8">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl">
-                                    <i class="fas fa-star-and-crescent"></i>
-                                </div>
-                                <h4 class="text-3xl font-heading text-paud-text">Kelompok A</h4>
-                            </div>
-                            <p class="text-gray-600 mb-6 font-semibold h-24">Fokus pada pengenalan adab Islami, huruf hijaiyah dasar, dan pembentukan kemandirian melalui bermain terarah.</p>
-                            <ul class="space-y-3 mb-8 text-gray-700">
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Mengenal Adab & Doa Harian</span></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Pengenalan Iqro/Ummi Jilid 1</span></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Motorik Kasar & Halus Islami</span></li>
-                            </ul>
-                            <a href="#pendaftaran" class="block w-full text-center bg-gray-100 hover:bg-paud-secondary hover:text-white text-paud-text font-bold py-4 rounded-2xl transition-colors">Daftar Kelas A</a>
+                <div class="bg-white rounded-[40px] shadow-xl border-4 border-green-200 p-8 md:p-12 flex flex-col lg:flex-row items-center gap-10">
+                    
+                    <div class="w-full lg:w-1/2">
+                        <h2 class="text-paud-secondary font-bold tracking-wider uppercase text-sm mb-2">Informasi Lengkap</h2>
+                        <h3 class="text-4xl text-paud-text font-heading mb-6">Unduh Brosur <span class="text-paud-primary">Resmi</span> PAUDQU</h3>
+                        <p class="text-gray-600 mb-8 font-semibold text-lg">
+                            Dapatkan informasi lebih detail mengenai rincian biaya pendaftaran, kurikulum lengkap, jadwal seragam, dan fasilitas sekolah melalui brosur kami.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <!-- Tombol Download -->
+                            <a href="#" class="bg-paud-text hover:bg-gray-800 text-white font-bold py-4 px-8 rounded-full shadow-lg transition-colors flex items-center justify-center gap-3">
+                                <i class="fas fa-file-pdf text-2xl text-red-400"></i> Download PDF (2MB)
+                            </a>
+                            <a href="#pendaftaran" class="bg-green-100 hover:bg-green-200 text-paud-primary font-bold py-4 px-8 rounded-full transition-colors flex items-center justify-center gap-3">
+                                Tanya Admin
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Kelas Kelompok B -->
-                    <div class="bg-white rounded-[40px] overflow-hidden shadow-xl border-4 border-paud-primary hover-bounce relative">
-                        <!-- Pita/Badge -->
-                        <div class="absolute top-6 right-0 bg-paud-primary text-white font-bold py-2 px-6 rounded-l-full shadow-md z-10">
-                            Usia 5-6 Tahun
-                        </div>
-                        <img src="https://placehold.co/600x300/10B981/ffffff?text=Kelas+Bintang+Qurani" alt="Kelompok B" class="w-full h-48 object-cover">
-                        <div class="p-8">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 text-xl">
-                                    <i class="fas fa-kaaba"></i>
-                                </div>
-                                <h4 class="text-3xl font-heading text-paud-text">Kelompok B</h4>
+                    <!-- Ilustrasi Brosur -->
+                    <div class="w-full lg:w-1/2 flex justify-center">
+                        <div class="relative group">
+                            <!-- Gambar Brosur (Menggunakan ilustrasi kertas/dokumen dari Unsplash) -->
+                            <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?auto=format&fit=crop&w=600&q=80" alt="Preview Brosur" class="rounded-2xl shadow-2xl w-full max-w-sm transform -rotate-3 group-hover:rotate-0 transition-transform duration-500 border-8 border-white">
+                            
+                            <!-- Hiasan pin -->
+                            <div class="absolute -top-4 -right-4 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white shadow-md transform rotate-12">
+                                <i class="fas fa-thumbtack"></i>
                             </div>
-                            <p class="text-gray-600 mb-6 font-semibold h-24">Persiapan matang menuju SDIT/MI dengan penekanan pada calistung dasar, tahfidz juz 30, dan kematangan ibadah.</p>
-                            <ul class="space-y-3 mb-8 text-gray-700">
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Membaca & Menulis Permulaan</span></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Tahfidz Surat Pendek & Hadits</span></li>
-                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Praktek Wudhu & Shalat Wajib</span></li>
-                            </ul>
-                            <a href="#pendaftaran" class="block w-full text-center bg-gray-100 hover:bg-paud-primary hover:text-white text-paud-text font-bold py-4 rounded-2xl transition-colors">Daftar Kelas B</a>
                         </div>
                     </div>
+
                 </div>
-            </div>
-            
-            <!-- Elemen Dekoratif Awan -->
-            <div class="absolute top-10 left-10 text-blue-100 text-6xl opacity-50 z-0">
-                <i class="fas fa-cloud"></i>
-            </div>
-            <div class="absolute bottom-20 right-10 text-gray-200 text-8xl opacity-50 z-0">
-                <i class="fas fa-cloud"></i>
             </div>
         </section>
 
+        <!-- GALERI SECTION (DIPERBARUI MENJADI FOLDER) -->
         <section id="galeri" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-paud-secondary font-bold tracking-wider uppercase text-sm mb-2">Dokumentasi</h2>
                     <h3 class="text-4xl md:text-5xl text-paud-text mb-4">Galeri <span class="text-paud-primary">Keceriaan</span> Santri</h3>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Momen-momen berharga ananda tercinta saat belajar, bermain, dan beribadah di PAUDQU Bintang Ceria.</p>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Klik pada album di bawah ini untuk melihat koleksi foto kegiatan ananda tercinta.</p>
                 </div>
 
-                <!-- Kategori: Foto Kegiatan -->
+                <!-- Kategori: Album Foto (Bentuk Folder) -->
                 <div class="mb-16">
                     <div class="flex items-center gap-3 mb-8 border-b-2 border-green-100 pb-2 inline-flex">
-                        <i class="fas fa-camera-retro text-2xl text-paud-primary"></i>
-                        <h4 class="text-2xl font-heading text-paud-text">Foto Kegiatan</h4>
+                        <i class="fas fa-folder-open text-2xl text-paud-primary"></i>
+                        <h4 class="text-2xl font-heading text-paud-text">Album Foto Kegiatan</h4>
                     </div>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        <!-- Foto 1 -->
-                        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                            <img src="https://placehold.co/600x400/10B981/ffffff?text=Praktek+Wudhu" alt="Praktek Wudhu" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-paud-text/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                <p class="text-white font-bold p-5 w-full text-center text-lg">Praktek Wudhu Bersama</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                        <!-- Album 1 -->
+                        <div onclick="openAlbum('wudhu')" class="group cursor-pointer">
+                            <div class="relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border-4 border-gray-100 hover:border-paud-primary bg-white pb-4">
+                                <!-- Efek Tab Folder di atas -->
+                                <div class="absolute top-0 left-4 w-1/3 h-4 bg-paud-primary rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+                                
+                                <img src="https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=600&q=80" alt="Praktek Ibadah" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                
+                                <!-- Badge Jumlah Foto -->
+                                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-paud-text font-bold px-3 py-1 rounded-full text-sm shadow flex items-center gap-2">
+                                    <i class="fas fa-images text-paud-secondary"></i> 6 Foto
+                                </div>
+
+                                <div class="pt-5 px-5">
+                                    <h5 class="text-xl font-heading text-paud-text mb-1 group-hover:text-paud-primary transition-colors">Praktek Ibadah & Wudhu</h5>
+                                    <p class="text-gray-500 text-sm font-semibold">Tahun Ajaran 2024/2025</p>
+                                </div>
                             </div>
                         </div>
-                        <!-- Foto 2 -->
-                        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                            <img src="https://placehold.co/600x400/0EA5E9/ffffff?text=Manasik+Haji" alt="Manasik Haji" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-paud-text/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                <p class="text-white font-bold p-5 w-full text-center text-lg">Latihan Manasik Haji</p>
+
+                        <!-- Album 2 -->
+                        <div onclick="openAlbum('kreativitas')" class="group cursor-pointer">
+                            <div class="relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border-4 border-gray-100 hover:border-paud-secondary bg-white pb-4">
+                                <div class="absolute top-0 left-4 w-1/3 h-4 bg-paud-secondary rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+                                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" alt="Kreativitas" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-paud-text font-bold px-3 py-1 rounded-full text-sm shadow flex items-center gap-2">
+                                    <i class="fas fa-images text-paud-primary"></i> 5 Foto
+                                </div>
+                                <div class="pt-5 px-5">
+                                    <h5 class="text-xl font-heading text-paud-text mb-1 group-hover:text-paud-secondary transition-colors">Kreativitas & Seni</h5>
+                                    <p class="text-gray-500 text-sm font-semibold">Lomba Mewarnai & Kerajinan</p>
+                                </div>
                             </div>
                         </div>
-                        <!-- Foto 3 -->
-                        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                            <img src="https://placehold.co/600x400/F59E0B/ffffff?text=Karya+Seni" alt="Mewarnai Kaligrafi" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-paud-text/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                <p class="text-white font-bold p-5 w-full text-center text-lg">Mewarnai Kaligrafi Islami</p>
+
+                        <!-- Album 3 -->
+                        <div onclick="openAlbum('manasik')" class="group cursor-pointer">
+                            <div class="relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border-4 border-gray-100 hover:border-paud-accent bg-white pb-4">
+                                <div class="absolute top-0 left-4 w-1/3 h-4 bg-paud-accent rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+                                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80" alt="Manasik Haji" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur text-paud-text font-bold px-3 py-1 rounded-full text-sm shadow flex items-center gap-2">
+                                    <i class="fas fa-images text-paud-text"></i> 4 Foto
+                                </div>
+                                <div class="pt-5 px-5">
+                                    <h5 class="text-xl font-heading text-paud-text mb-1 group-hover:text-paud-accent transition-colors">Kegiatan Outdoor</h5>
+                                    <p class="text-gray-500 text-sm font-semibold">Outbound & Manasik Haji</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -331,61 +325,42 @@
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Video 1 -->
-                        <div class="group relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-gray-100 hover:border-paud-secondary transition-colors cursor-pointer bg-gray-50">
-                            <img src="https://placehold.co/800x450/e2e8f0/64748b?text=Thumbnail+Video+Hafalan" alt="Video Hafalan" class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity">
-                            
-                            <!-- Tombol Play -->
+                        <div class="group relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-gray-100 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Video Hafalan" class="w-full h-64 object-cover opacity-90 group-hover:opacity-100 transition-opacity">
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="w-20 h-20 bg-paud-secondary text-white rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(245,158,11,0.5)] transform group-hover:scale-110 transition-transform duration-300">
                                     <i class="fas fa-play ml-1"></i>
                                 </div>
                             </div>
-                            
-                            <!-- Judul Video -->
-                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12">
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pt-12">
                                 <p class="text-white font-heading text-xl tracking-wide mb-1">Hafalan Surat An-Naba</p>
                                 <p class="text-gray-300 text-sm font-semibold"><i class="fas fa-clock mr-1"></i> Penampilan Akhir Tahun</p>
                             </div>
                         </div>
 
-                        <!-- Video 2 -->
-                        <div class="group relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-gray-100 hover:border-paud-primary transition-colors cursor-pointer bg-gray-50">
-                            <img src="https://placehold.co/800x450/e2e8f0/64748b?text=Thumbnail+Senam+Ceria" alt="Video Senam" class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity">
-                            
-                            <!-- Tombol Play -->
+                        <div class="group relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-gray-100 cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80" alt="Video Kelas" class="w-full h-64 object-cover opacity-90 group-hover:opacity-100 transition-opacity">
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="w-20 h-20 bg-paud-primary text-white rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(16,185,129,0.5)] transform group-hover:scale-110 transition-transform duration-300">
                                     <i class="fas fa-play ml-1"></i>
                                 </div>
                             </div>
-                            
-                            <!-- Judul Video -->
-                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12">
-                                <p class="text-white font-heading text-xl tracking-wide mb-1">Senam Anak Sholeh Ceria</p>
-                                <p class="text-gray-300 text-sm font-semibold"><i class="fas fa-sun mr-1"></i> Kegiatan Jumat Pagi</p>
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 pt-12">
+                                <p class="text-white font-heading text-xl tracking-wide mb-1">Keceriaan Kelas Sentra</p>
+                                <p class="text-gray-300 text-sm font-semibold"><i class="fas fa-sun mr-1"></i> Belajar Sambil Bermain</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="text-center mt-12">
-                    <a href="#" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-paud-text font-bold py-3 px-8 rounded-full transition-colors shadow-sm">
-                        Lihat Lebih Banyak <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
             </div>
         </section>
 
+        <!-- PENDAFTARAN -->
         <section id="pendaftaran" class="py-24 relative overflow-hidden bg-paud-secondary">
-            <!-- Pola Lingkaran Latar Belakang -->
-            <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white rounded-full opacity-10"></div>
-            <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-paud-accent rounded-full opacity-20"></div>
-
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl text-center transform hover:scale-[1.01] transition-transform duration-300">
-                    <div class="w-20 h-20 bg-paud-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner -mt-20 border-8 border-white">
-                        <i class="fas fa-envelope-open-text text-paud-text"></i>
+                <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl text-center transform hover:scale-[1.01] transition-transform duration-300 border-b-8 border-paud-primary">
+                    <div class="w-20 h-20 bg-paud-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner -mt-24 border-8 border-white">
+                        <i class="fas fa-envelope-open-text text-white"></i>
                     </div>
                     <h2 class="text-4xl md:text-5xl text-paud-text mb-6">Yuk, Bergabung Bersama Kami!</h2>
                     <p class="text-xl text-gray-600 mb-10">Kuota pendaftaran tahun ajaran baru terbatas. Hubungi admin kami sekarang untuk informasi biaya dan pendaftaran.</p>
@@ -394,95 +369,234 @@
                         <a href="https://wa.me/6281234567890" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold text-xl px-8 py-4 rounded-full shadow-lg transition-colors flex items-center justify-center gap-3">
                             <i class="fab fa-whatsapp text-2xl"></i> Chat WhatsApp
                         </a>
-                        <a href="mailto:info@paudqubintangceria.sch.id" class="bg-paud-text hover:bg-gray-800 text-white font-bold text-xl px-8 py-4 rounded-full shadow-lg transition-colors flex items-center justify-center gap-3">
-                            <i class="fas fa-file-signature"></i> Isi Formulir Online
-                        </a>
                     </div>
-                    
-                    <p class="mt-8 text-sm text-gray-500 font-semibold">*Tersedia trial class gratis (1 hari) untuk pendaftar bulan ini.</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-paud-text text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-                <!-- Info Sekolah -->
-                <div>
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 bg-paud-primary rounded-full flex items-center justify-center text-white text-xl">
+    <!-- FOOTER LENGKAP -->
+    <footer class="bg-paud-text text-white pt-20 pb-8 border-t-8 border-paud-primary relative overflow-hidden">
+        <!-- Dekorasi latar belakang footer -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-paud-primary opacity-10 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Kolom 1: Info Sekolah -->
+                <div class="col-span-1 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-6 cursor-pointer" onclick="window.scrollTo(0,0)">
+                        <div class="w-12 h-12 bg-paud-primary rounded-full flex items-center justify-center text-white text-xl shadow-lg transform rotate-[-10deg]">
                             <i class="fas fa-book-quran"></i>
                         </div>
-                        <span class="font-heading text-2xl tracking-wide">PAUDQU</span>
+                        <div class="flex flex-col">
+                            <span class="font-heading text-2xl text-white leading-none tracking-wide">PAUDQU</span>
+                            <span class="text-sm font-bold text-paud-secondary">Bintang Ceria</span>
+                        </div>
                     </div>
-                    <p class="text-gray-400 mb-6 font-semibold">
-                        Lembaga Pendidikan Anak Usia Dini Al-Qur'an (PAUDQU) Bintang Ceria. Insya Allah membimbing generasi Robbani dengan ceria, penuh cinta, dan berlandaskan Sunnah.
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6 font-semibold">
+                        Lembaga pendidikan anak usia dini yang berkomitmen mencetak generasi penghafal Al-Qur'an, cerdas, mandiri, dan berakhlak mulia sesuai sunnah.
                     </p>
+                    <!-- Sosial Media -->
                     <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-paud-primary rounded-full flex items-center justify-center transition-colors">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-pink-500 rounded-full flex items-center justify-center transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-gradient-to-tr hover:from-yellow-400 hover:to-pink-500 hover:text-white transition-all transform hover:scale-110 shadow-lg">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#1877F2] hover:text-white transition-all transform hover:scale-110 shadow-lg">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#FF0000] hover:text-white transition-all transform hover:scale-110 shadow-lg">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
 
-                <!-- Kontak -->
+                <!-- Kolom 2: Tautan Cepat -->
                 <div>
-                    <h4 class="text-xl font-heading mb-6 text-paud-accent">Hubungi Kami</h4>
-                    <ul class="space-y-4 text-gray-300 font-semibold">
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-map-marker-alt mt-1 text-paud-secondary"></i>
-                            <span>Jl. Pendidikan No. 123, Komplek Harapan Indah, Kota Bahagia, 12345</span>
+                    <h4 class="font-heading text-xl text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-link text-paud-secondary text-sm"></i> Tautan Cepat
+                    </h4>
+                    <ul class="space-y-3">
+                        <li><a href="#beranda" class="text-gray-400 hover:text-paud-secondary transition-colors text-sm flex items-center gap-2 font-semibold"><i class="fas fa-chevron-right text-xs"></i> Beranda</a></li>
+                        <li><a href="#tentang" class="text-gray-400 hover:text-paud-secondary transition-colors text-sm flex items-center gap-2 font-semibold"><i class="fas fa-chevron-right text-xs"></i> Tentang Kami</a></li>
+                        <li><a href="#program" class="text-gray-400 hover:text-paud-secondary transition-colors text-sm flex items-center gap-2 font-semibold"><i class="fas fa-chevron-right text-xs"></i> Program & Kelas</a></li>
+                        <li><a href="#brosur" class="text-gray-400 hover:text-paud-secondary transition-colors text-sm flex items-center gap-2 font-semibold"><i class="fas fa-chevron-right text-xs"></i> Unduh Brosur</a></li>
+                        <li><a href="#galeri" class="text-gray-400 hover:text-paud-secondary transition-colors text-sm flex items-center gap-2 font-semibold"><i class="fas fa-chevron-right text-xs"></i> Galeri Kegiatan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 3: Jam Operasional -->
+                <div>
+                    <h4 class="font-heading text-xl text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-clock text-paud-secondary text-sm"></i> Jam Belajar
+                    </h4>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center text-sm border-b border-gray-700 pb-2">
+                            <span class="text-gray-400 font-semibold">Senin - Kamis</span>
+                            <span class="text-paud-primary font-bold bg-white/10 px-2 py-1 rounded">07.30 - 11.00</span>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-phone-alt text-paud-secondary"></i>
-                            <span>(021) 9876-5432</span>
+                        <li class="flex justify-between items-center text-sm border-b border-gray-700 pb-2">
+                            <span class="text-gray-400 font-semibold">Jum'at</span>
+                            <span class="text-paud-primary font-bold bg-white/10 px-2 py-1 rounded">07.30 - 10.00</span>
                         </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fab fa-whatsapp text-paud-secondary"></i>
-                            <span>+62 812-3456-7890</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fas fa-envelope text-paud-secondary"></i>
-                            <span>info@paudqubintangceria.sch.id</span>
+                        <li class="flex justify-between items-center text-sm border-b border-gray-700 pb-2">
+                            <span class="text-gray-400 font-semibold">Sabtu - Ahad</span>
+                            <span class="text-red-400 font-bold bg-red-400/10 px-2 py-1 rounded">Libur</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Jam Operasional -->
+                <!-- Kolom 4: Kontak -->
                 <div>
-                    <h4 class="text-xl font-heading mb-6 text-paud-accent">Jam Belajar</h4>
-                    <ul class="space-y-3 text-gray-300 font-semibold">
-                        <li class="flex justify-between border-b border-gray-700 pb-2">
-                            <span>Senin - Kamis</span>
-                            <span>07:30 - 11:30 WIB</span>
+                    <h4 class="font-heading text-xl text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-address-book text-paud-secondary text-sm"></i> Hubungi Kami
+                    </h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-sm">
+                            <div class="mt-1 w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-paud-primary flex-shrink-0">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span class="text-gray-400 font-semibold leading-relaxed">Jl. Pendidikan Islami No. 123, Komplek Masjid An-Nur, Kota Berkah, 12345</span>
                         </li>
-                        <li class="flex justify-between border-b border-gray-700 pb-2">
-                            <span>Jumat</span>
-                            <span>07:30 - 10:30 WIB</span>
+                        <li class="flex items-center gap-3 text-sm">
+                            <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-paud-primary flex-shrink-0">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <a href="https://wa.me/6281234567890" target="_blank" class="text-gray-400 hover:text-white transition-colors font-semibold">+62 812-3456-7890</a>
                         </li>
-                        <li class="flex justify-between border-b border-gray-700 pb-2 text-red-400">
-                            <span>Sabtu - Minggu</span>
-                            <span>Libur (Ekskul)</span>
+                        <li class="flex items-center gap-3 text-sm">
+                            <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-paud-primary flex-shrink-0">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <a href="mailto:info@paudqubintangceria.sch.id" class="text-gray-400 hover:text-white transition-colors font-semibold">info@paudqu.sch.id</a>
                         </li>
                     </ul>
                 </div>
+
             </div>
 
-            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm font-semibold">
-                <p>&copy; 2026 PAUDQU Bintang Ceria. All rights reserved.</p>
-                <p>Didesain dengan <i class="fas fa-heart text-red-500 mx-1"></i> untuk anak-anak.</p>
+            <!-- Copyright Bawah -->
+            <div class="border-t border-gray-800 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm font-semibold">
+                    &copy; 2026 PAUDQU Bintang Ceria. All rights reserved.
+                </p>
+                <div class="text-gray-500 text-sm flex items-center gap-1 font-semibold">
+                    Dibuat dengan <i class="fas fa-heart text-red-500 animate-pulse"></i> untuk Anak Sholeh
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- ========================================== -->
+    <!-- MODAL VIRTUAL PAGE UNTUK DETAIL ALBUM FOTO -->
+    <!-- ========================================== -->
+    <div id="album-modal" class="fixed inset-0 bg-gray-50 z-[100] hidden opacity-0 overflow-y-auto">
+        <!-- Header Modal / Halaman Detail -->
+        <div class="bg-white shadow-sm sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <button onclick="closeAlbum()" class="flex items-center gap-2 text-gray-600 hover:text-paud-primary font-bold text-lg bg-gray-100 hover:bg-green-50 px-4 py-2 rounded-full transition-colors">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+                <h2 id="modal-album-title" class="font-heading text-2xl text-paud-text hidden sm:block">Judul Album</h2>
+                <div class="w-24"></div> <!-- Spacer -->
+            </div>
+        </div>
+
+        <!-- Konten Foto Halaman Detail -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12 sm:hidden">
+                <h2 id="modal-album-title-mobile" class="font-heading text-3xl text-paud-text">Judul Album</h2>
+            </div>
+            
+            <!-- Grid Foto -->
+            <div id="modal-image-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Foto akan di-inject lewat JavaScript -->
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Data Album Galeri (Menggunakan gambar dari Unsplash agar nyata)
+        const galleryData = {
+            'wudhu': {
+                title: 'Praktek Ibadah & Wudhu',
+                images: [
+                    'https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1564683214964-1fcdda2171ec?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1609599006353-e629aaab31fc?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1584666363842-87002221b6d1?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=600&q=80'
+                ]
+            },
+            'kreativitas': {
+                title: 'Kreativitas & Seni',
+                images: [
+                    'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?auto=format&fit=crop&w=600&q=80'
+                ]
+            },
+            'manasik': {
+                title: 'Kegiatan Outdoor & Manasik',
+                images: [
+                    'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1545620980-0a6b7d307185?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1472162072942-cd5147eb3902?auto=format&fit=crop&w=600&q=80',
+                    'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80'
+                ]
+            }
+        };
+
+        const modal = document.getElementById('album-modal');
+        const modalGrid = document.getElementById('modal-image-grid');
+        const modalTitle = document.getElementById('modal-album-title');
+        const modalTitleMobile = document.getElementById('modal-album-title-mobile');
+
+        // Fungsi Buka Halaman Album
+        function openAlbum(albumId) {
+            const data = galleryData[albumId];
+            
+            // Set Judul
+            modalTitle.textContent = data.title;
+            modalTitleMobile.textContent = data.title;
+            
+            // Kosongkan grid lalu isi dengan foto baru
+            modalGrid.innerHTML = '';
+            data.images.forEach((imgUrl, index) => {
+                const delay = index * 100; // Efek muncul berurutan
+                const imgElement = `
+                    <div class="rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border-4 border-white transform scale-95 opacity-0 animate-fade-in" style="animation-delay: ${delay}ms; animation-fill-mode: forwards;">
+                        <img src="${imgUrl}" alt="Foto ${index+1}" class="w-full h-64 object-cover hover:scale-110 transition-transform duration-500">
+                    </div>
+                `;
+                modalGrid.innerHTML += imgElement;
+            });
+
+            // Tampilkan Modal
+            modal.classList.remove('hidden');
+            document.body.classList.add('no-scroll');
+            // Sedikit delay agar transisi CSS berjalan mulus
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.classList.add('opacity-100');
+            }, 10);
+        }
+
+        // Fungsi Tutup Halaman Album
+        function closeAlbum() {
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.classList.remove('no-scroll');
+            }, 300); // Tunggu sampai transisi fade out selesai
+        }
+
         // Script untuk Menu Mobile
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-btn');
@@ -491,8 +605,6 @@
 
             btn.addEventListener('click', () => {
                 menu.classList.toggle('hidden');
-                
-                // Ubah ikon burger menjadi close
                 if (menu.classList.contains('hidden')) {
                     icon.classList.remove('fa-times');
                     icon.classList.add('fa-bars');
@@ -502,9 +614,7 @@
                 }
             });
 
-            // Tutup menu mobile ketika salah satu link diklik
-            const mobileLinks = menu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
+            menu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     menu.classList.add('hidden');
                     icon.classList.remove('fa-times');
@@ -512,7 +622,7 @@
                 });
             });
             
-            // Efek scroll halus untuk anchor links
+            // Smooth scroll
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -523,12 +633,19 @@
             });
         });
         
-        // CSS untuk animasi sederhana
+        // CSS tambahan untuk animasi modal
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes bounce {
                 0%, 100% { transform: translateY(0); }
                 50% { transform: translateY(-10px); }
+            }
+            @keyframes fadeInScale {
+                0% { opacity: 0; transform: scale(0.95); }
+                100% { opacity: 1; transform: scale(1); }
+            }
+            .animate-fade-in {
+                animation: fadeInScale 0.5s ease-out;
             }
         `;
         document.head.appendChild(style);
