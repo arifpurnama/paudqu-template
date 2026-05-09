@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAUDQU Bintang Ceria - Tempat Belajar Menyenangkan!</title>
+    
+    <!-- Tailwind CSS untuk styling responsif dan cepat -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Konfigurasi kustom Tailwind untuk tema warna PAUD -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paud-primary': '#10B981', // Hijau Islami (Emerald)
+                        'paud-secondary': '#F59E0B', // Emas/Kuning (Amber)
+                        'paud-accent': '#0EA5E9', // Biru cerah ceria
+                        'paud-bg': '#F0FDF4', // Hijau sangat muda (Honeydew)
+                        'paud-text': '#0F172A' // Biru gelap untuk teks
+                    },
+                    fontFamily: {
+                        'sans': ['Nunito', 'sans-serif'],
+                        'heading': ['Fredoka One', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts: Nunito (teks biasa) & Fredoka One (judul yang bulat & ramah) -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS tambahan untuk animasi dan penyesuaian khusus -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #F0FDF4;
+            color: #0F172A;
+        }
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: 'Fredoka One', cursive;
+            font-weight: normal;
+        }
+        
+        /* Efek hover untuk kartu (bouncing halus) */
+        .hover-bounce {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .hover-bounce:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Pola latar belakang (dots) */
+        .bg-pattern {
+            background-image: radial-gradient(#4ECDC4 2px, transparent 2px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.1;
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col antialiased">
+    <!-- Latar belakang pola -->
+    <div class="bg-pattern"></div>
+
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+                    <div class="w-12 h-12 bg-paud-primary rounded-full flex items-center justify-center text-white text-2xl shadow-lg transform rotate-[-10deg]">
+                        <i class="fas fa-book-quran"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-heading text-2xl text-paud-primary leading-none tracking-wide">PAUDQU</span>
+                        <span class="text-sm font-bold text-paud-secondary">Bintang Ceria</span>
+                    </div>
+                </div>
+
+                <!-- Navigasi Desktop -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#beranda" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Beranda</a>
+                    <a href="#tentang" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Tentang Kami</a>
+                    <a href="#program" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Program</a>
+                    <a href="#galeri" class="text-gray-700 hover:text-paud-primary font-bold transition-colors">Galeri</a>
+                    <a href="#pendaftaran" class="bg-paud-accent text-paud-text hover:bg-yellow-400 px-6 py-2 rounded-full font-heading text-lg shadow-md hover:shadow-lg transition-all transform hover:scale-105">Daftar Sekarang</a>
+                </nav>
+
+                <!-- Tombol Menu Mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-paud-primary focus:outline-none p-2 rounded-md">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Tersembunyi secara default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+                <a href="#beranda" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Beranda</a>
+                <a href="#tentang" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Tentang Kami</a>
+                <a href="#program" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Program</a>
+                <a href="#galeri" class="block px-3 py-3 rounded-md text-base font-bold text-gray-700 hover:text-paud-primary hover:bg-gray-50">Galeri</a>
+                <a href="#pendaftaran" class="block px-3 py-3 mt-4 text-center rounded-full text-base font-heading bg-paud-accent text-paud-text hover:bg-yellow-400 shadow-md">Daftar Sekarang</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section id="beranda" class="relative pt-20 pb-32 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                    
+                    <!-- Teks Hero -->
+                    <div class="w-full lg:w-1/2 text-center lg:text-left">
+                        <div class="inline-block px-4 py-1.5 bg-green-100 text-green-800 rounded-full font-bold text-sm mb-6 border border-green-200">
+                            Assalamu'alaikum Ayah & Bunda! 🌟 PSB 2026/2027 Dibuka
+                        </div>
+                        <h1 class="text-5xl lg:text-6xl text-paud-text leading-tight mb-6">
+                            Mencetak Generasi <span class="text-paud-primary">Qur'ani</span> yang Cerdas & <span class="text-paud-secondary">Berakhlak Mulia</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                            Mari bergabung bersama kami membentuk karakter anak sholeh dan sholehah sejak dini melalui bermain dan cinta Al-Qur'an.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <a href="#pendaftaran" class="bg-paud-primary hover:bg-green-600 text-white font-heading text-xl px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp"></i> Hubungi Kami
+                            </a>
+                            <a href="#tentang" class="bg-white hover:bg-gray-50 text-paud-text border-2 border-gray-200 font-bold text-xl px-8 py-4 rounded-full shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
+                                <i class="fas fa-play-circle text-paud-secondary"></i> Video Profil
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Gambar/Ilustrasi Hero -->
+                    <div class="w-full lg:w-1/2 relative">
+                        <!-- Ornamen Latar Belakang Gambar -->
+                        <div class="absolute inset-0 bg-paud-secondary rounded-full opacity-20 filter blur-3xl transform scale-110"></div>
+                        
+                        <!-- Gambar placeholder menggunakan placehold.co dengan warna ceria -->
+                        <div class="relative z-10 w-full max-w-lg mx-auto">
+                            <!-- Menggunakan gambar placeholder yang merepresentasikan anak-anak/sekolah -->
+                            <img src="https://placehold.co/600x500/10B981/ffffff?text=Ilustrasi+Anak+Sholeh+Belajar" alt="Anak-anak mengaji di PAUDQU" class="rounded-3xl shadow-2xl border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500 w-full object-cover h-[400px] lg:h-[500px]">
+                            
+                            <!-- Floating badges untuk kesan lucu -->
+                            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border-2 border-paud-primary bounce-animation" style="animation: bounce 3s infinite;">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-heading text-lg leading-none">Alhamdulillah</p>
+                                        <p class="text-xs text-gray-500 font-bold">Terakreditasi A</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gelombang Pemisah di Bawah Hero -->
+            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-0">
+                <svg class="relative block w-full h-16 md:h-24 lg:h-32" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.9,122.84,200.7,114A575.46,575.46,0,0,0,321.39,56.44Z" class="fill-white"></path>
+                </svg>
+            </div>
+        </section>
+
+        <section id="tentang" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-paud-secondary font-bold tracking-wider uppercase text-sm mb-2">Mengapa Kami?</h2>
+                    <h3 class="text-4xl md:text-5xl text-paud-text mb-6">Membangun Generasi <span class="text-paud-primary relative">Qur'ani<svg class="absolute w-full h-3 -bottom-1 left-0 text-paud-accent z-[-1]" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q50,20 100,10" stroke="currentColor" stroke-width="8" fill="none"/></svg></span> Sejak Dini</h3>
+                    <p class="text-lg text-gray-600">Kami percaya bahwa pendidikan usia dini adalah fondasi penting. Di PAUDQU Bintang Ceria, kami memadukan kurikulum modern dengan nilai-nilai agama Islam.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Kartu Fitur 1 -->
+                    <div class="bg-green-50 rounded-3xl p-8 hover-bounce border-2 border-green-100">
+                        <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform rotate-3">
+                            <i class="fas fa-book-quran"></i>
+                        </div>
+                        <h4 class="text-2xl font-heading text-paud-text mb-4">Metode Ummi</h4>
+                        <p class="text-gray-600 font-semibold">Belajar membaca Al-Qur'an menggunakan metode Ummi yang menyenangkan, mudah, dan terstruktur khusus untuk anak usia dini.</p>
+                    </div>
+
+                    <!-- Kartu Fitur 2 -->
+                    <div class="bg-yellow-50 rounded-3xl p-8 hover-bounce border-2 border-yellow-100">
+                        <div class="w-16 h-16 bg-yellow-500 rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform -rotate-3">
+                            <i class="fas fa-mosque"></i>
+                        </div>
+                        <h4 class="text-2xl font-heading text-paud-text mb-4">Pembiasaan Ibadah</h4>
+                        <p class="text-gray-600 font-semibold">Menanamkan kecintaan beribadah sejak dini melalui praktek wudhu, shalat dhuha berjamaah, dan hafalan doa harian.</p>
+                    </div>
+
+                    <!-- Kartu Fitur 3 -->
+                    <div class="bg-blue-50 rounded-3xl p-8 hover-bounce border-2 border-blue-100">
+                        <div class="w-16 h-16 bg-paud-accent rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-md transform rotate-3">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="text-2xl font-heading text-paud-text mb-4">Pendidik Berdedikasi</h4>
+                        <p class="text-gray-600 font-semibold">Asatidzah (guru-guru) yang sabar, penyayang, tersertifikasi, dan menjadi teladan akhlak mulia bagi ananda tercinta.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="program" class="py-20 bg-gray-50 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl text-paud-text mb-4">Program <span class="text-paud-secondary">Kelas</span> Kami</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Pilih kelompok usia yang sesuai dengan tahapan perkembangan ananda tercinta.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+                    <!-- Kelas Kelompok A -->
+                    <div class="bg-white rounded-[40px] overflow-hidden shadow-xl border-4 border-paud-secondary hover-bounce relative">
+                        <!-- Pita/Badge -->
+                        <div class="absolute top-6 right-0 bg-paud-secondary text-white font-bold py-2 px-6 rounded-l-full shadow-md z-10">
+                            Usia 4-5 Tahun
+                        </div>
+                        <img src="https://placehold.co/600x300/F59E0B/ffffff?text=Kelas+Taman+Syurga" alt="Kelompok A" class="w-full h-48 object-cover">
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xl">
+                                    <i class="fas fa-star-and-crescent"></i>
+                                </div>
+                                <h4 class="text-3xl font-heading text-paud-text">Kelompok A</h4>
+                            </div>
+                            <p class="text-gray-600 mb-6 font-semibold h-24">Fokus pada pengenalan adab Islami, huruf hijaiyah dasar, dan pembentukan kemandirian melalui bermain terarah.</p>
+                            <ul class="space-y-3 mb-8 text-gray-700">
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Mengenal Adab & Doa Harian</span></li>
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Pengenalan Iqro/Ummi Jilid 1</span></li>
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Motorik Kasar & Halus Islami</span></li>
+                            </ul>
+                            <a href="#pendaftaran" class="block w-full text-center bg-gray-100 hover:bg-paud-secondary hover:text-white text-paud-text font-bold py-4 rounded-2xl transition-colors">Daftar Kelas A</a>
+                        </div>
+                    </div>
+
+                    <!-- Kelas Kelompok B -->
+                    <div class="bg-white rounded-[40px] overflow-hidden shadow-xl border-4 border-paud-primary hover-bounce relative">
+                        <!-- Pita/Badge -->
+                        <div class="absolute top-6 right-0 bg-paud-primary text-white font-bold py-2 px-6 rounded-l-full shadow-md z-10">
+                            Usia 5-6 Tahun
+                        </div>
+                        <img src="https://placehold.co/600x300/10B981/ffffff?text=Kelas+Bintang+Qurani" alt="Kelompok B" class="w-full h-48 object-cover">
+                        <div class="p-8">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 text-xl">
+                                    <i class="fas fa-kaaba"></i>
+                                </div>
+                                <h4 class="text-3xl font-heading text-paud-text">Kelompok B</h4>
+                            </div>
+                            <p class="text-gray-600 mb-6 font-semibold h-24">Persiapan matang menuju SDIT/MI dengan penekanan pada calistung dasar, tahfidz juz 30, dan kematangan ibadah.</p>
+                            <ul class="space-y-3 mb-8 text-gray-700">
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Membaca & Menulis Permulaan</span></li>
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Tahfidz Surat Pendek & Hadits</span></li>
+                                <li class="flex items-start gap-3"><i class="fas fa-check-circle text-green-500 mt-1"></i> <span>Praktek Wudhu & Shalat Wajib</span></li>
+                            </ul>
+                            <a href="#pendaftaran" class="block w-full text-center bg-gray-100 hover:bg-paud-primary hover:text-white text-paud-text font-bold py-4 rounded-2xl transition-colors">Daftar Kelas B</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Elemen Dekoratif Awan -->
+            <div class="absolute top-10 left-10 text-blue-100 text-6xl opacity-50 z-0">
+                <i class="fas fa-cloud"></i>
+            </div>
+            <div class="absolute bottom-20 right-10 text-gray-200 text-8xl opacity-50 z-0">
+                <i class="fas fa-cloud"></i>
+            </div>
+        </section>
+
+        <section id="galeri" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-paud-secondary font-bold tracking-wider uppercase text-sm mb-2">Dokumentasi</h2>
+                    <h3 class="text-4xl md:text-5xl text-paud-text mb-4">Galeri <span class="text-paud-primary">Keceriaan</span> Santri</h3>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Momen-momen berharga ananda tercinta saat belajar, bermain, dan beribadah di PAUDQU Bintang Ceria.</p>
+                </div>
+
+                <!-- Kategori: Foto Kegiatan -->
+                <div class="mb-16">
+                    <div class="flex items-center gap-3 mb-8 border-b-2 border-green-100 pb-2 inline-flex">
+                        <i class="fas fa-camera-retro text-2xl text-paud-primary"></i>
+                        <h4 class="text-2xl font-heading text-paud-text">Foto Kegiatan</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        <!-- Foto 1 -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                            <img src="https://placehold.co/600x400/10B981/ffffff?text=Praktek+Wudhu" alt="Praktek Wudhu" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-paud-text/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white font-bold p-5 w-full text-center text-lg">Praktek Wudhu Bersama</p>
+                            </div>
+                        </div>
+                        <!-- Foto 2 -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                            <img src="https://placehold.co/600x400/0EA5E9/ffffff?text=Manasik+Haji" alt="Manasik Haji" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-paud-text/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white font-bold p-5 w-full text-center text-lg">Latihan Manasik Haji</p>
+                            </div>
+                        </div>
+                        <!-- Foto 3 -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                            <img src="https://placehold.co/600x400/F59E0B/ffffff?text=Karya+Seni" alt="Mewarnai Kaligrafi" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-paud-text/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white font-bold p-5 w-full text-center text-lg">Mewarnai Kaligrafi Islami</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kategori: Video -->
+                <div>
+                    <div class="flex items-center gap-3 mb-8 border-b-2 border-yellow-100 pb-2 inline-flex">
+                        <i class="fas fa-video text-2xl text-paud-secondary"></i>
+                        <h4 class="text-2xl font-heading text-paud-text">Video Santri</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Video 1 -->
+                        <div class="group relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-gray-100 hover:border-paud-secondary transition-colors cursor-pointer bg-gray-50">
+                            <img src="https://placehold.co/800x450/e2e8f0/64748b?text=Thumbnail+Video+Hafalan" alt="Video Hafalan" class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                            
+                            <!-- Tombol Play -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-paud-secondary text-white rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(245,158,11,0.5)] transform group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-play ml-1"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Judul Video -->
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12">
+                                <p class="text-white font-heading text-xl tracking-wide mb-1">Hafalan Surat An-Naba</p>
+                                <p class="text-gray-300 text-sm font-semibold"><i class="fas fa-clock mr-1"></i> Penampilan Akhir Tahun</p>
+                            </div>
+                        </div>
+
+                        <!-- Video 2 -->
+                        <div class="group relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-gray-100 hover:border-paud-primary transition-colors cursor-pointer bg-gray-50">
+                            <img src="https://placehold.co/800x450/e2e8f0/64748b?text=Thumbnail+Senam+Ceria" alt="Video Senam" class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                            
+                            <!-- Tombol Play -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-20 h-20 bg-paud-primary text-white rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(16,185,129,0.5)] transform group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fas fa-play ml-1"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Judul Video -->
+                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-12">
+                                <p class="text-white font-heading text-xl tracking-wide mb-1">Senam Anak Sholeh Ceria</p>
+                                <p class="text-gray-300 text-sm font-semibold"><i class="fas fa-sun mr-1"></i> Kegiatan Jumat Pagi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-paud-text font-bold py-3 px-8 rounded-full transition-colors shadow-sm">
+                        Lihat Lebih Banyak <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="pendaftaran" class="py-24 relative overflow-hidden bg-paud-secondary">
+            <!-- Pola Lingkaran Latar Belakang -->
+            <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white rounded-full opacity-10"></div>
+            <div class="absolute bottom-0 left-0 -mb-20 -ml-20 w-64 h-64 bg-paud-accent rounded-full opacity-20"></div>
+
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl text-center transform hover:scale-[1.01] transition-transform duration-300">
+                    <div class="w-20 h-20 bg-paud-accent rounded-full flex items-center justify-center text-3xl mx-auto mb-6 shadow-inner -mt-20 border-8 border-white">
+                        <i class="fas fa-envelope-open-text text-paud-text"></i>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl text-paud-text mb-6">Yuk, Bergabung Bersama Kami!</h2>
+                    <p class="text-xl text-gray-600 mb-10">Kuota pendaftaran tahun ajaran baru terbatas. Hubungi admin kami sekarang untuk informasi biaya dan pendaftaran.</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <a href="https://wa.me/6281234567890" target="_blank" class="bg-green-500 hover:bg-green-600 text-white font-bold text-xl px-8 py-4 rounded-full shadow-lg transition-colors flex items-center justify-center gap-3">
+                            <i class="fab fa-whatsapp text-2xl"></i> Chat WhatsApp
+                        </a>
+                        <a href="mailto:info@paudqubintangceria.sch.id" class="bg-paud-text hover:bg-gray-800 text-white font-bold text-xl px-8 py-4 rounded-full shadow-lg transition-colors flex items-center justify-center gap-3">
+                            <i class="fas fa-file-signature"></i> Isi Formulir Online
+                        </a>
+                    </div>
+                    
+                    <p class="mt-8 text-sm text-gray-500 font-semibold">*Tersedia trial class gratis (1 hari) untuk pendaftar bulan ini.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-paud-text text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Info Sekolah -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-paud-primary rounded-full flex items-center justify-center text-white text-xl">
+                            <i class="fas fa-book-quran"></i>
+                        </div>
+                        <span class="font-heading text-2xl tracking-wide">PAUDQU</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 font-semibold">
+                        Lembaga Pendidikan Anak Usia Dini Al-Qur'an (PAUDQU) Bintang Ceria. Insya Allah membimbing generasi Robbani dengan ceria, penuh cinta, dan berlandaskan Sunnah.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-paud-primary rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-pink-500 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kontak -->
+                <div>
+                    <h4 class="text-xl font-heading mb-6 text-paud-accent">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-gray-300 font-semibold">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-paud-secondary"></i>
+                            <span>Jl. Pendidikan No. 123, Komplek Harapan Indah, Kota Bahagia, 12345</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone-alt text-paud-secondary"></i>
+                            <span>(021) 9876-5432</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fab fa-whatsapp text-paud-secondary"></i>
+                            <span>+62 812-3456-7890</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-paud-secondary"></i>
+                            <span>info@paudqubintangceria.sch.id</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Jam Operasional -->
+                <div>
+                    <h4 class="text-xl font-heading mb-6 text-paud-accent">Jam Belajar</h4>
+                    <ul class="space-y-3 text-gray-300 font-semibold">
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span>Senin - Kamis</span>
+                            <span>07:30 - 11:30 WIB</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2">
+                            <span>Jumat</span>
+                            <span>07:30 - 10:30 WIB</span>
+                        </li>
+                        <li class="flex justify-between border-b border-gray-700 pb-2 text-red-400">
+                            <span>Sabtu - Minggu</span>
+                            <span>Libur (Ekskul)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm font-semibold">
+                <p>&copy; 2026 PAUDQU Bintang Ceria. All rights reserved.</p>
+                <p>Didesain dengan <i class="fas fa-heart text-red-500 mx-1"></i> untuk anak-anak.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script untuk Menu Mobile
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = btn.querySelector('i');
+
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                
+                // Ubah ikon burger menjadi close
+                if (menu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+
+            // Tutup menu mobile ketika salah satu link diklik
+            const mobileLinks = menu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+            
+            // Efek scroll halus untuk anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+        
+        // CSS untuk animasi sederhana
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
